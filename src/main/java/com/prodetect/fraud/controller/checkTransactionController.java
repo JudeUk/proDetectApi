@@ -3,7 +3,7 @@ package com.prodetect.fraud.controller;
 
 import com.prodetect.fraud.entity.CheckTransactionRequest;
 import com.prodetect.fraud.entity.CheckTransactionResponse;
-import jakarta.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
@@ -82,6 +82,7 @@ public class checkTransactionController {
 
             resp.setResponseCode("99");
             resp.setResponseMessage("SUSPICIOUS TRANSACTION");
+            resp.getData().add("Rating: Score 20");
 ////            resp.setRequestId(req.getRequestId());
 ////            resp.setIpAddress(req.getIpAddress());
 ////            resp.setRequestToken(req.getRequestToken());
