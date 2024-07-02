@@ -1,0 +1,8 @@
+com/prodetect/fraud/services/FraudRiskScoreService.class
+com/prodetect/fraud/entity/FraudRiskScore.class
+com/prodetect/fraud/entity/CheckTransactionResponse.class
+com/prodetect/fraud/entity/CheckTransactionRequest.class
+com/prodetect/fraud/entity/Mentor.class
+com/prodetect/fraud/repository/FraudRiskScoreRepository.class
+com/prodetect/fraud/controller/checkTransactionController.class
+com/prodetect/fraud/FraudApplication.class
