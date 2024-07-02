@@ -158,7 +158,7 @@ public class checkTransactionController {
 //            resp.setAffiliateCode(req.getAffiliateCode());
         }
 
-        return new ResponseEntity<>(fraudRiskScoreResp, HttpStatus.OK);
+        return ResponseEntity.ok().body(fraudRiskScoreResp);
     }
 
 
