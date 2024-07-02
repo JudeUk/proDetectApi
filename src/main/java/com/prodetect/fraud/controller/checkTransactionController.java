@@ -139,7 +139,7 @@ public class checkTransactionController {
 
 
     @RequestMapping(value = "/getRiskScore", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Object> getRiskScore(@RequestBody String request,@RequestHeader HttpHeaders httpHeaders, final HttpServletRequest httpServletRequest) throws Exception {
+    public ResponseEntity<Object> getRiskScore(@RequestParam(required = false) String request,@RequestHeader HttpHeaders httpHeaders, final HttpServletRequest httpServletRequest) throws Exception {
         // MDC.put("requestId", utils.generateSessionId());
 //        String sourcecode = httpServletRequest.getHeader("x-source-code");
 //        CheckTransactionRequest req = new CheckTransactionRequest();
