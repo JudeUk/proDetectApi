@@ -4,8 +4,12 @@ package com.prodetect.fraud.controller;
 import com.prodetect.fraud.entity.CheckTransactionRequest;
 import com.prodetect.fraud.entity.CheckTransactionResponse;
 import javax.servlet.http.HttpServletRequest;
+
+import com.prodetect.fraud.entity.FraudRiskScore;
+import com.prodetect.fraud.services.FraudRiskScoreService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -13,13 +17,18 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.google.gson.Gson;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 @RestController
 @RequestMapping("api/prodetect/")
 public class checkTransactionController {
 
     private final static Logger logger = LoggerFactory.getLogger(checkTransactionController.class);
+    @Autowired
+    FraudRiskScoreService fraudRiskScoreService;
 //
 //    @PostMapping(value = "login", consumes = "text/plain", produces = "text/plain")
 //    public ResponseEntity<String> createUser(@RequestBody String requests, final HttpServletRequest httpServletRequest)
@@ -72,6 +81,7 @@ public class checkTransactionController {
         String sourcecode = httpServletRequest.getHeader("x-source-code");
         CheckTransactionRequest req = new CheckTransactionRequest();
         CheckTransactionResponse resp = new CheckTransactionResponse();
+        FraudRiskScore fraudRiskScore = new FraudRiskScore();
 
         try {
             Gson gs = new Gson();
@@ -83,6 +93,17 @@ public class checkTransactionController {
             resp.setResponseCode("99");
             resp.setResponseMessage("SUSPICIOUS TRANSACTION");
             resp.getData().add("Rating: Score 20");
+
+
+
+            fraudRiskScore.setTransactionId(2335);
+            fraudRiskScore.setScore(40);
+            fraudRiskScore.setTransactionDate(LocalDateTime.now());
+            fraudRiskScore.setDescAmount(5000);
+            fraudRiskScore.setSourceCountry("Canada");
+
+
+            fraudRiskScoreService.savefraudRiskScore(fraudRiskScore);
 ////            resp.setRequestId(req.getRequestId());
 ////            resp.setIpAddress(req.getIpAddress());
 ////            resp.setRequestToken(req.getRequestToken());
@@ -90,6 +111,7 @@ public class checkTransactionController {
 ////            resp.setSourceChannelId(req.getSourceChannelId());
 ////            resp.setResponseCode("E04");
 ////            resp.setResponseMessage(ex.getMessage());
+
 
         } catch (Throwable ex) {
 //            resp.setAffiliateCode(req.getAffiliateCode());
@@ -109,5 +131,33 @@ public class checkTransactionController {
 
         return new ResponseEntity<>(resp, HttpStatus.OK);
     }
+
+
+
+
+    @RequestMapping(value = "/getRiskScore", method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Object> getRiskScore(@RequestBody String request,
+                                                         @RequestHeader HttpHeaders httpHeaders, final HttpServletRequest httpServletRequest) throws Exception {
+        // MDC.put("requestId", utils.generateSessionId());
+//        String sourcecode = httpServletRequest.getHeader("x-source-code");
+//        CheckTransactionRequest req = new CheckTransactionRequest();
+//        CheckTransactionResponse resp = new CheckTransactionResponse();
+//        FraudRiskScore fraudRiskScore = new FraudRiskScore();
+
+        List<FraudRiskScore> fraudRiskScoreResp = new ArrayList<>();
+
+        try {
+
+
+            fraudRiskScoreResp = fraudRiskScoreService.getAllFraudRiskScore();
+
+
+        } catch (Throwable ex) {
+//            resp.setAffiliateCode(req.getAffiliateCode());
+        }
+
+        return new ResponseEntity<>(fraudRiskScoreResp, HttpStatus.OK);
+    }
+
 
 }
