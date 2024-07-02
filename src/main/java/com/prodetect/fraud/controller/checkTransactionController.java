@@ -21,6 +21,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 @RestController
 @RequestMapping("api/prodetect/")
@@ -29,6 +30,8 @@ public class checkTransactionController {
     private final static Logger logger = LoggerFactory.getLogger(checkTransactionController.class);
     @Autowired
     FraudRiskScoreService fraudRiskScoreService;
+
+    Random random = new Random();
 //
 //    @PostMapping(value = "login", consumes = "text/plain", produces = "text/plain")
 //    public ResponseEntity<String> createUser(@RequestBody String requests, final HttpServletRequest httpServletRequest)
@@ -96,7 +99,7 @@ public class checkTransactionController {
 
 
 
-            fraudRiskScore.setTransactionId(2335);
+            fraudRiskScore.setTransactionId(random.nextInt());
             fraudRiskScore.setScore(40);
             fraudRiskScore.setTransactionDate(LocalDateTime.now());
             fraudRiskScore.setDescAmount(5000);
@@ -136,8 +139,7 @@ public class checkTransactionController {
 
 
     @RequestMapping(value = "/getRiskScore", method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Object> getRiskScore(@RequestBody String request,
-                                                         @RequestHeader HttpHeaders httpHeaders, final HttpServletRequest httpServletRequest) throws Exception {
+    public ResponseEntity<Object> getRiskScore(@RequestHeader HttpHeaders httpHeaders, final HttpServletRequest httpServletRequest) throws Exception {
         // MDC.put("requestId", utils.generateSessionId());
 //        String sourcecode = httpServletRequest.getHeader("x-source-code");
 //        CheckTransactionRequest req = new CheckTransactionRequest();
