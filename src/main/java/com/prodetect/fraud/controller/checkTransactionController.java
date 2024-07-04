@@ -104,6 +104,7 @@ public class checkTransactionController {
             fraudRiskScore.setTransactionDate(LocalDateTime.now());
             fraudRiskScore.setDescAmount(5000);
             fraudRiskScore.setSourceCountry("Canada");
+            fraudRiskScore.setDescCountry("Ghana");
 
 
             fraudRiskScoreService.savefraudRiskScore(fraudRiskScore);

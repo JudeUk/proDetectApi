@@ -22,4 +22,7 @@ public class FraudRiskScore {
     private String sourceCountry;
 
     private int descAmount;
+
+    private String descCountry;
+
 }
