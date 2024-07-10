@@ -13,7 +13,7 @@ public class FraudRiskScore {
 
 
     @Id
-    private double transactionId;
+    private int transactionId;
     private int score;
     private LocalDateTime transactionDate;
 
